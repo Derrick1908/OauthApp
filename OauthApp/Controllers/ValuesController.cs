@@ -42,7 +42,9 @@ namespace OauthApp.Controllers
         {
         }
 
-        //This method is For all types of role  
+        //This method is For all types of role.
+        //This controller returns Okay for all valid Tokens according to Owin
+        //even though the user may have logged out.
         [Authorize(Roles = "SuperAdmin, Admin, User")]
         [HttpGet]
         [Route("api/values/getvalues")]
@@ -59,6 +61,8 @@ namespace OauthApp.Controllers
         }
 
 
+        // This Controller is called on Logout.
+        // It deletes the user Information from the Table (separately created) along with its token. 
         [Authorize]
         [HttpPost]
         [Route("api/values/Logout")]
@@ -87,6 +91,8 @@ namespace OauthApp.Controllers
 
         }
 
+        //Though Auhtorize may validate a valid token according to it, we check in our
+        //Table if that token is still present, then only do we allow it access
         [Authorize]
         [HttpGet]
         [Route("api/values/CheckValidity")]
